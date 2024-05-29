@@ -4,6 +4,7 @@ import FeedBackList from './component/FeedBackList';
 import data from './data/FeedbackData';
 import './App.css';
 import FeedBackstat from './component/FeedBackstat';
+import FeedBackForm from './component/FeedBackForm';
 
 function App() {
   const [feedback, setFeedback] = useState(data);
@@ -18,6 +19,7 @@ function App() {
     <>
       <Header text={'Faizan App'} />
       <div className="container">
+        <FeedBackForm />
         <FeedBackstat feedback={feedback} />
         <FeedBackList feedback={feedback} handleDelete={DeletefeedBack} />
       </div>
