@@ -1,9 +1,10 @@
+import Header from './component/Header';
 import './App.css';
 
 function App() {
   return (
     <>
-      <h1>hi</h1>
+      <Header text={'Faizan App'} />
     </>
   );
 }
