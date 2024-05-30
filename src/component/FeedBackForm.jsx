@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Card from './Shared/Card';
 import Button from './Shared/Button';
+import RatingSelect from './RatingSelect';
 
 const FeedBackForm = () => {
   const [text, setText] = useState('');
@@ -30,6 +31,11 @@ const FeedBackForm = () => {
     <Card>
       <form>
         <h2>How Would you rate your service with us ?</h2>
+
+        {/* //Rating */}
+
+        <RatingSelect select={(rating) => setRating(rating)} />
+
         <div className="input-group">
           <input
             type="text"
