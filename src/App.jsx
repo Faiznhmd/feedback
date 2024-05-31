@@ -8,6 +8,7 @@ import './App.css';
 import FeedBackstat from './component/FeedBackstat';
 import FeedBackForm from './component/FeedBackForm';
 import About from './component/Pages/About';
+import Post from './component/Pages/Post';
 
 function App() {
   const [feedback, setFeedback] = useState(data);
@@ -48,6 +49,7 @@ function App() {
             }
           ></Route>
           <Route path="/about" element={<About />} />
+          <Route path="/post/:id/:name" element={<Post />} />
         </Routes>
       </div>
     </Router>
