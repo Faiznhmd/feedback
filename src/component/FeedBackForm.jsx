@@ -3,7 +3,7 @@ import Card from './Shared/Card';
 import Button from './Shared/Button';
 import RatingSelect from './RatingSelect';
 
-const FeedBackForm = () => {
+const FeedBackForm = ({ addForm }) => {
   const [text, setText] = useState('');
 
   const [btnDisabled, setBtnDisabled] = useState(true);
@@ -21,15 +21,29 @@ const FeedBackForm = () => {
       setBtnDisabled(true);
     } else {
       setMessage(null);
-      setBtnDisabled(true);
+      setBtnDisabled(false);
     }
 
     setText(e.target.value);
   };
 
+  //feedback add
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (text.trim().length > 10) {
+      const newFeedback = {
+        text,
+        rating,
+      };
+      addForm(newFeedback);
+      setText('');
+      // console.log(newFeedback);
+    }
+  };
+
   return (
     <Card>
-      <form>
+      <form onSubmit={handleSubmit}>
         <h2>How Would you rate your service with us ?</h2>
 
         {/* //Rating */}
@@ -43,11 +57,11 @@ const FeedBackForm = () => {
             onChange={handleTextChange}
             value={text}
           />
-          <Button type="submit" isDisabled={btnDisabled}>
+          <Button version="primary" type="submit" isDisabled={btnDisabled}>
             Send
           </Button>
         </div>
-        {message && <div className="message"> {message}</div>}
+        {message && <div className="message">{message}</div>}
       </form>
     </Card>
   );

@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import Header from './component/Header';
 import FeedBackList from './component/FeedBackList';
@@ -15,12 +16,19 @@ function App() {
     }
   };
 
+  const AddFeedBAck = (newFeedback) => {
+    newFeedback.id = uuidv4();
+    setFeedback([newFeedback, ...feedback]);
+  };
+
   return (
     <>
       <Header text={'Faizan App'} />
       <div className="container">
-        <FeedBackForm />
+        <FeedBackForm addForm={AddFeedBAck} />
+
         <FeedBackstat feedback={feedback} />
+
         <FeedBackList feedback={feedback} handleDelete={DeletefeedBack} />
       </div>
     </>
