@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import FeedBackContext from '../context/FeedbackContext';
 import Card from './Shared/Card';
 import Button from './Shared/Button';
 import RatingSelect from './RatingSelect';
 
-const FeedBackForm = ({ addForm }) => {
+const FeedBackForm = () => {
+  const { AddFeedBAck } = useContext(FeedBackContext);
+
   const [text, setText] = useState('');
 
   const [btnDisabled, setBtnDisabled] = useState(true);
@@ -35,7 +38,7 @@ const FeedBackForm = ({ addForm }) => {
         text,
         rating,
       };
-      addForm(newFeedback);
+      AddFeedBAck(newFeedback);
       setText('');
       // console.log(newFeedback);
     }
