@@ -9,6 +9,7 @@ import FeedBackstat from './component/FeedBackstat';
 import FeedBackForm from './component/FeedBackForm';
 import About from './component/Pages/About';
 import Post from './component/Pages/Post';
+import { FeedBackProvider } from './context/FeedbackContext';
 
 function App() {
   const [feedback, setFeedback] = useState(data);
@@ -27,32 +28,34 @@ function App() {
   };
 
   return (
-    <Router>
-      <Link to={{ pathname: '/' }}>
-        <Header text={'Faizan App'} />
-      </Link>
-      <div className="container">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <FeedBackForm addForm={AddFeedBAck} />
+    <FeedBackProvider>
+      <Router>
+        <Link to={{ pathname: '/' }}>
+          <Header text={'Faizan App'} />
+        </Link>
+        <div className="container">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <FeedBackForm addForm={AddFeedBAck} />
 
-                <FeedBackstat feedback={feedback} />
+                  <FeedBackstat feedback={feedback} />
 
-                <FeedBackList
-                  feedback={feedback}
-                  handleDelete={DeletefeedBack}
-                />
-              </>
-            }
-          ></Route>
-          <Route path="/about" element={<About />} />
-          <Route path="/post/:id/:name" element={<Post />} />
-        </Routes>
-      </div>
-    </Router>
+                  <FeedBackList
+                    feedback={feedback}
+                    handleDelete={DeletefeedBack}
+                  />
+                </>
+              }
+            ></Route>
+            <Route path="/about" element={<About />} />
+            <Route path="/post/:id/:name" element={<Post />} />
+          </Routes>
+        </div>
+      </Router>
+    </FeedBackProvider>
   );
 }
 
