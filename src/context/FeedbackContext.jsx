@@ -26,8 +26,9 @@ export const FeedBackProvider = ({ children }) => {
     setLoading(false);
   };
   //DeletefeedBack
-  const DeletefeedBack = (id) => {
+  const DeletefeedBack = async (id) => {
     if (window.confirm('Are you sure you want to delete?')) {
+      await fetch(`http://localhost:5000/feedback/${id}`, { method: 'DELETE' });
       setFeedback(feedback.filter((item) => item.id !== id));
     }
   };
@@ -54,9 +55,18 @@ export const FeedBackProvider = ({ children }) => {
   };
 
   //updateFeedBack
-  const updateFeedBack = (id, updItem) => {
+  const updateFeedBack = async (id, updItem) => {
+    const response = await fetch(`http://localhost:5000/feedback/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updItem),
+    });
+
+    const data = await response.json();
     setFeedback(
-      feedback.map((item) => (item.id === id ? { ...item, ...updItem } : item))
+      feedback.map((item) => (item.id === id ? { ...item, ...data } : item))
     );
   };
 
