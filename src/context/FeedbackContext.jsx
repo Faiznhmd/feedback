@@ -1,5 +1,4 @@
 import { useState, createContext, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 const FeedBackContext = createContext();
 
@@ -34,9 +33,16 @@ export const FeedBackProvider = ({ children }) => {
   };
 
   //AddfeedBack
-  const AddFeedBAck = (newFeedback) => {
-    newFeedback.id = uuidv4();
-    setFeedback([newFeedback, ...feedback]);
+  const AddFeedBAck = async (newFeedback) => {
+    const response = await fetch('http://localhost:5000/feedback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newFeedback),
+    });
+    const data = await response.json();
+    setFeedback([data, ...feedback]);
   };
 
   //EditFeedBack
