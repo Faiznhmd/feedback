@@ -1,7 +1,7 @@
 import { useState, createContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-export const FeedBackContext = createContext();
+const FeedBackContext = createContext();
 
 export const FeedBackProvider = ({ children }) => {
   const [feedback, setFeedback] = useState([
@@ -17,6 +17,11 @@ export const FeedBackProvider = ({ children }) => {
     },
   ]);
 
+  const [feedbackEdit, setFeedbackEdit] = useState({
+    item: {},
+    edit: false,
+  });
+
   //DeletefeedBack
   const DeletefeedBack = (id) => {
     if (window.confirm('Are you sure you want to delete?')) {
@@ -30,15 +35,35 @@ export const FeedBackProvider = ({ children }) => {
     setFeedback([newFeedback, ...feedback]);
   };
 
+  //EditFeedBack
+  const EditFeedBack = (item) => {
+    setFeedbackEdit({
+      item,
+      edit: true,
+    });
+  };
+
+  //updateFeedBack
+  const updateFeedBack = (id, updItem) => {
+    setFeedback(
+      feedback.map((item) => (item.id === id ? { ...item, ...updItem } : item))
+    );
+  };
+
   return (
     <FeedBackContext.Provider
       value={{
         feedback,
         DeletefeedBack,
         AddFeedBAck,
+        EditFeedBack,
+        feedbackEdit,
+        updateFeedBack,
       }}
     >
       {children}
     </FeedBackContext.Provider>
   );
 };
+
+export default FeedBackContext;
