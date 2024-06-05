@@ -99,3 +99,6 @@ export default App;
 // }
 
 // export default App;
+
+//  "server": "json-server --watch db.json --port 5000",
+//     "start": "concurrently \"npm run server\" \"npm run dev\""
