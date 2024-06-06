@@ -1,7 +1,10 @@
 import app from './src/app';
-import { config } from './src/config/db';
+import { config } from './src/config/config';
+import connectD from './src/config/db';
 
-const startServer = () => {
+const startServer = async () => {
+  await connectD();
+
   const PORT = config.port || 3000;
 
   app.listen(PORT, () => {
