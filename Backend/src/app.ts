@@ -1,6 +1,6 @@
 import express from 'express';
 import globalError from './middleware/globalError';
-import feedBackRouter from './feedback/feedbackRouter';
+import feedBackRouter from './routes/feedbackRouter';
 
 const app = express();
 
