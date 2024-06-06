@@ -1,5 +1,6 @@
 import express from 'express';
 import globalError from './middleware/globalError';
+import feedBackRouter from './feedback/feedbackRouter';
 
 const app = express();
 
@@ -9,5 +10,6 @@ app.get('/', (req, res, next) => {
 
 //global error handler
 app.use(globalError);
+app.use('/feedback', feedBackRouter);
 
 export default app;

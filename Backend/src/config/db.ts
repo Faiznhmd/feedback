@@ -1,20 +1,14 @@
-import { config } from './config';
 import mongoose from 'mongoose';
+import { config } from './config';
 
-const connectD = async () => {
+const connectDB = async () => {
   try {
-    mongoose.connection.on('conneced', () => {
-      console.log('Connected to Database Successfully');
-    });
-
-    mongoose.connection.on('error', (err) => {
-      console.log('Error in connecting to Database', err);
-    });
-
-    await mongoose.connect(config.dataBaseUrl as string);
-  } catch (err) {
-    console.log('Failed to connect to Database', err);
+    const connect = await mongoose.connect(config.dataBaseUrl as string);
+    console.log(`MongoDB Connected: ${connect.connection.host}`);
+  } catch (error) {
+    console.error('Error');
     process.exit(1);
   }
 };
-export default connectD;
+
+export default connectDB;
