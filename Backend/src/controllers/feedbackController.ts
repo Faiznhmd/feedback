@@ -1,6 +1,20 @@
 import { Request, Response, NextFunction } from 'express';
 import Feedback from '../models/feedbackmodel';
 
+const GetAllfeedback = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const feedbackList = await Feedback.find();
+
+  if (!feedbackList) {
+    res.status(404);
+    throw new Error('No feedback found.');
+  }
+
+  res.status(200).json(feedbackList);
+};
 const CreateFeedBack = async (
   req: Request,
   res: Response,
@@ -77,4 +91,4 @@ const UpdateFeedBack = async (
   res.status(200).json(feedback);
 };
 
-export { CreateFeedBack, DeleteFeedBack, UpdateFeedBack };
+export { CreateFeedBack, DeleteFeedBack, UpdateFeedBack, GetAllfeedback };
