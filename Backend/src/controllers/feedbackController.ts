@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import Feedback from '../models/feedbackmodel';
 
 const CreateFeedBack = async (
@@ -34,7 +34,16 @@ const DeleteFeedBack = async (
   res: Response,
   next: NextFunction
 ) => {
-  res.json({ message: 'Deletefeedback' });
+  const { id } = req.params;
+
+  const feedback = await Feedback.findByIdAndDelete(id);
+
+  if (!feedback) {
+    res.status(404);
+    throw new Error('Feedback not found');
+  }
+
+  res.status(200).json({ message: 'Feedback deleted successfully' });
 };
 
 const UpdateFeedBack = async (
@@ -58,15 +67,11 @@ const UpdateFeedBack = async (
     throw new Error('Rating should be a number between 1 and 10');
   }
 
-  const feedback = await Feedback.findByIdAndUpdate(
-    id,
-    { text, rating },
-    { new: true }
-  );
+  const feedback = await Feedback.findByIdAndUpdate(id, { text, rating });
 
   if (!feedback) {
     res.status(404);
-    throw new Error('Feedback not found.');
+    throw new Error('Feedback not found');
   }
 
   res.status(200).json(feedback);

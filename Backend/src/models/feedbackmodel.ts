@@ -1,11 +1,11 @@
-import mongoose, { model } from 'mongoose';
+import { Schema, Document, model } from 'mongoose';
 
 interface IFeedback extends Document {
   text: string;
   rating: number;
 }
 
-const feedBack = new mongoose.Schema<IFeedback>(
+const feedBack = new Schema<IFeedback>(
   {
     text: {
       type: String,
