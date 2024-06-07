@@ -7,10 +7,7 @@ import {
 
 const feedBackRouter = express.Router();
 
-feedBackRouter
-  .route('/')
-  .post(CreateFeedBack)
-  .delete(DeleteFeedBack)
-  .put(UpdateFeedBack);
+feedBackRouter.post('/', CreateFeedBack);
+feedBackRouter.route('/:id').put(UpdateFeedBack).delete(DeleteFeedBack);
 
 export default feedBackRouter;
