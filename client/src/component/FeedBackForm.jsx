@@ -3,7 +3,7 @@ import FeedBackContext from '../context/FeedbackContext';
 import Card from './Shared/Card';
 import Button from './Shared/Button';
 import RatingSelect from './RatingSelect';
-//he
+
 const FeedBackForm = () => {
   const { AddFeedBAck, feedbackEdit, updateFeedBack } =
     useContext(FeedBackContext);
@@ -49,7 +49,7 @@ const FeedBackForm = () => {
       };
 
       if (feedbackEdit.edit === true) {
-        updateFeedBack(feedbackEdit.item.id, newFeedback);
+        updateFeedBack(feedbackEdit.item._id, newFeedback);
       } else {
         AddFeedBAck(newFeedback);
       }

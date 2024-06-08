@@ -9,7 +9,7 @@ const FeedBackItem = ({ item }) => {
   return (
     <Card>
       <div className="num-display">{item.rating} </div>
-      <button className="close" onClick={() => DeletefeedBack(item.id)}>
+      <button className="close" onClick={() => DeletefeedBack(item._id)}>
         <FaTimes color="purple" />
       </button>
 

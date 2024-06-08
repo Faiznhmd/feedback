@@ -6,8 +6,6 @@ export const FeedBackProvider = ({ children }) => {
   const [feedback, setFeedback] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const env = import.meta.env.VITE_API_URL;
-
   const [feedbackEdit, setFeedbackEdit] = useState({
     item: {},
     edit: false,
@@ -20,73 +18,66 @@ export const FeedBackProvider = ({ children }) => {
   //Fetch feedBack
 
   const FetchFeedBack = async () => {
-    const response = await fetch(
-      env === 'production'
-        ? `/.netlify/functions/json-server/feedback?_sort=id&_order=desc`
-        : `http://localhost:5000/feedback?_sort=id&_order=desc`
-    );
+    const response = await fetch(`/feedback`);
     const data = await response.json();
+    // console.log(data);
     setFeedback(data);
     setLoading(false);
   };
+
   //DeletefeedBack
   const DeletefeedBack = async (id) => {
     if (window.confirm('Are you sure you want to delete?')) {
-      await fetch(
-        env === 'production'
-          ? `/.netlify/functions/json-server/feedback/${id}`
-          : `http://localhost:5000/feedback/${id}`,
-        { method: 'DELETE' }
-      );
-      setFeedback(feedback.filter((item) => item.id !== id));
+      await fetch(`/feedback/${id}`, { method: 'DELETE' });
+      setFeedback(feedback.filter((item) => item._id !== id));
     }
   };
 
   //AddfeedBack
   const AddFeedBAck = async (newFeedback) => {
-    const response = await fetch(
-      env === 'production'
-        ? `/.netlify/functions/json-server/feedback`
-        : 'http://localhost:5000/feedback',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newFeedback),
-      }
-    );
+    const response = await fetch('/feedback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newFeedback),
+    });
     const data = await response.json();
     setFeedback([data, ...feedback]);
   };
 
+  //updateFeedBack
+  const updateFeedBack = async (id, updItem) => {
+    const response = await fetch(`/feedback/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updItem),
+    });
+
+    const data = await response.json();
+    setFeedback(feedback.map((item) => (item._id === id ? data : item)));
+  };
+
   //EditFeedBack
+  // const EditFeedBack = (item) => {
+  //   setFeedbackEdit({
+  //     item,
+  //     edit: true,
+  //   });
+  // };
+
+  // setFeedbackEdit({
+  //   item: {},
+  //   edit: false,
+  // });
+
   const EditFeedBack = (item) => {
     setFeedbackEdit({
       item,
       edit: true,
     });
-  };
-
-  //updateFeedBack
-  const updateFeedBack = async (id, updItem) => {
-    const response = await fetch(
-      env === 'production'
-        ? `/.netlify/functions/json-server/feedback/${id}`
-        : `http://localhost:5000/feedback/${id}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updItem),
-      }
-    );
-
-    const data = await response.json();
-    setFeedback(
-      feedback.map((item) => (item.id === id ? { ...item, ...data } : item))
-    );
   };
 
   return (

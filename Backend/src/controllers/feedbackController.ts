@@ -43,11 +43,7 @@ const CreateFeedBack = async (
   res.status(201).json(feedback);
 };
 
-const DeleteFeedBack = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const DeleteFeedBack = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const feedback = await Feedback.findByIdAndDelete(id);
@@ -60,12 +56,10 @@ const DeleteFeedBack = async (
   res.status(200).json({ message: 'Feedback deleted successfully' });
 };
 
-const UpdateFeedBack = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const UpdateFeedBack = async (req: Request, res: Response) => {
   const { id } = req.params;
+  console.log(req.params);
+
   const { text, rating } = req.body;
 
   if (text !== undefined && typeof text !== 'string') {
